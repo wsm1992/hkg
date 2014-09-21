@@ -25,6 +25,7 @@ public class MainActivity extends Activity{
 		viewPager.addPage(R.layout.page,"主題");
 		viewPager.addPage(R.layout.page,"回帶");
 		viewPager.addPage(R.layout.page,"賣飛佛");
+		viewPager.addPage(R.layout.page,"其他");
 		viewPager.init();
 	}
 	
