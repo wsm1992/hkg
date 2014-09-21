@@ -1,0 +1,8 @@
+<resources>
+
+    <string name="app_name">hkg</string>
+    <string name="hello">Hello World</string>
+    <string name="app_list_header_refresh_down">下拉更新</string>
+    <string name="app_list_header_refresh_last_update">更新於:</string>
+
+</resources>

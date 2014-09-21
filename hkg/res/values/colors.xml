@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<resources> 
+<color name="white">#FFFFFF</color>
+<color name="userBlue">#0066FF</color>
+<color name="userRed">#FF0066</color>
+<color name="ratingGood">#FFFF66</color>
+<color name="ratingBad">#FF0000</color>
+<color name="pagerBackground">#336699</color>
+<color name="pagerIndicator">#AACCFF</color>
+
+</resources>
