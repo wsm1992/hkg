@@ -32,9 +32,7 @@ public class HkgViewPager {
         pagerTabStrip.setTextSpacing(50);    
 	}
 
-	public void addPage(int resource,String title){
-		LayoutInflater lf = LayoutInflater.from(GoldenConfig.getContext());  
-		View view = lf.inflate(resource, null);  
+	public void addPage(View view,String title){		
 		viewList.add(view);  
 		titleList.add(title);  
 	}

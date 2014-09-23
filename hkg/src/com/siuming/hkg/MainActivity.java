@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.Window;
 
 public class MainActivity extends Activity{
@@ -21,11 +23,15 @@ public class MainActivity extends Activity{
 	private void setPageviewer() {
 		viewPager = new HkgViewPager();
 		viewPager.setViewPager((ViewPager) findViewById(R.id.viewpager));
-		viewPager.setPagerTabStripper((PagerTabStrip) findViewById(R.id.pagertab));        
-		viewPager.addPage(R.layout.page,"主題");
-		viewPager.addPage(R.layout.page,"回帶");
-		viewPager.addPage(R.layout.page,"賣飛佛");
-		viewPager.addPage(R.layout.page,"其他");
+		viewPager.setPagerTabStripper((PagerTabStrip) findViewById(R.id.pagertab));  
+		
+		/*LayoutInflater lf = LayoutInflater.from(GoldenConfig.getContext());  
+		View view = lf.inflate(R.layout.page, null); */
+		ListViewPage viewPage = new ListViewPage(this);
+		ListViewPage viewPage1 = new ListViewPage(this);
+		
+		viewPager.addPage(viewPage,"主題");
+		viewPager.addPage(viewPage1,"主題2");
 		viewPager.init();
 	}
 	
