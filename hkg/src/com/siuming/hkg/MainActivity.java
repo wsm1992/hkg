@@ -25,14 +25,15 @@ public class MainActivity extends Activity{
 		viewPager.setViewPager((ViewPager) findViewById(R.id.viewpager));
 		viewPager.setPagerTabStripper((PagerTabStrip) findViewById(R.id.pagertab));  
 		
-		/*LayoutInflater lf = LayoutInflater.from(GoldenConfig.getContext());  
-		View view = lf.inflate(R.layout.page, null); */
+		RefListViewPage refViewPage = new RefListViewPage(this);
 		ListViewPage viewPage = new ListViewPage(this);
-		ListViewPage viewPage1 = new ListViewPage(this);
 		
-		viewPager.addPage(viewPage,"主題");
-		viewPager.addPage(viewPage1,"主題2");
+		viewPager.addPage(refViewPage,"主題");
+		viewPager.addPage(viewPage,"主題2");
 		viewPager.init();
+		
+		refViewPage.setRefreshListView(10);
+		viewPage.setRefreshListView(10);
 	}
 	
 	

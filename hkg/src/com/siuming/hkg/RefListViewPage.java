@@ -5,20 +5,25 @@ import java.util.HashMap;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.AdapterView.OnItemClickListener;
 
+import com.siuming.hkg.RefreshListView.RefreshListener;
 import com.siuming.hkg.util.MapKey;
 
-public class ListViewPage extends LinearLayout  implements IListViewPage {
-	ListView listView;
+public class RefListViewPage extends LinearLayout implements IListViewPage {
+	RefreshListView listView;
 
-	public ListViewPage(Context context) {
+	public RefListViewPage(Context context) {
 		super(context, null);
-		LayoutInflater.from(context).inflate(R.layout.simple_list_view_page, this);
-		listView = (ListView) findViewById(R.id.ListView1);
+		LayoutInflater.from(context).inflate(R.layout.ref_list_view_page, this);
+		listView = (RefreshListView) findViewById(R.id.RefListView1);
+	}
+	
+	public void setOnRefreshListener(RefreshListener refreshListener) {
+		listView.setOnRefreshListener(refreshListener);
 	}
 
 	public void setRefreshListView(int id) {
@@ -41,8 +46,35 @@ public class ListViewPage extends LinearLayout  implements IListViewPage {
 		
 		SimpleAdapter adapter = new SimpleAdapter(GoldenConfig.getContext(), list, layoutId, keyList, idList);
 		listView.setAdapter(adapter);
+		
+		setOnRefreshListener(new RefreshListener() {
+			
+			@Override
+			public void waitUpdate() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void showUpdate() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void refreshing() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void loadUpdate() {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
-	
+
 	@Override
 	public void setOnItemClickListener(OnItemClickListener impl) {
 		listView.setOnItemClickListener(impl);
