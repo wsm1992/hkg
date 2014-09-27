@@ -3,6 +3,7 @@ package com.siuming.hkg;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
 
 import com.siuming.hkg.HkgTopicTitleBar.TitleBarListener;
 import com.siuming.hkg.view.activity.MainActivity;
@@ -18,17 +19,24 @@ public class AppPresenter {
 	HkgViewPager viewPager;
     RefListViewPage topicPage;
     ListViewPage historyPage;
+    
+    RefPagePresenter topicPagePm;
+    
+    public void startApp(){
+		createTitleBar();
+		createPageViewer();
+		setListener();
+    }
 
 	public void setMainActivity(MainActivity activity) {
 		mainActivity = activity;
 	}
 	
-	public void createTitleBar(){
+	private void createTitleBar(){
 		topicTitleBar = new HkgTopicTitleBar(mainActivity);
-		topicTitleBar.setTitleBarListener(getTitleBarListener());
 	}
 
-	public void setPageViewer() {
+	private void createPageViewer() {
 		viewPager = new HkgViewPager(mainActivity);		
 		topicPage = new RefListViewPage(mainActivity);
 		historyPage = new ListViewPage(mainActivity);
@@ -36,38 +44,49 @@ public class AppPresenter {
 		viewPager.addPage(topicPage,"主題");
 		viewPager.addPage(historyPage,"主題2");
 		
-		topicPage.setMockData(10);
-		historyPage.setMockData(10);
+		topicPagePm = new RefPagePresenter(topicPage);
 		
-		topicPage.setOnItemClickListener(getOnTopicViewItemClickListener());
+		topicPage.setMockData(10);
+		historyPage.setMockData(10);		
+	}
+	
+	private void setListener(){
+		topicTitleBar.setTitleBarListener(new TitleBarListenerImpl());
+		topicPage.setOnItemClickListener(new OnItemClickListenerImpl());
 	}
 
-	public TitleBarListener getTitleBarListener() {
-		return new TitleBarListener() {
-			
-			@Override
-			public void onSpinnerSelected(AdapterView<?> parent, View view, int position, long arg3) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void onSettingButtonClick(View arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void onPostButtonClick(View arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		};
-	}
+	private class TitleBarListenerImpl implements TitleBarListener{
 
-	public OnItemClickListener getOnTopicViewItemClickListener() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		@Override
+		public void onSpinnerSelected(AdapterView<?> parent, View view, int position, long arg3) {
+			Toast.makeText(mainActivity, "selected " + position, Toast.LENGTH_SHORT)
+			.show();
+			GoldenConfig.setType(position);
+			topicPage.showLoading();
+			//activityPresenter.loadRefreshList();
+		}
 
+		@Override
+		public void onSettingButtonClick(View arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onPostButtonClick(View arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	private class OnItemClickListenerImpl implements OnItemClickListener{
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
 }

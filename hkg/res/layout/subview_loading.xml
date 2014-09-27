@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textViewFashionArticle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="我每食完一碟火腩飯之後都會同我女朋友講分手\n
+  因為我知道, 佢已經唔再明白我 \n
+ 佢唔知道我o係茶記所經歷過既有幾多 \n
+\n
+佢問我食乜, 我真係唔想答佢 \n
+日本野? 秦國野? 真係敷（膚）淺 \n
+究竟我仲可以繼續忍受自己既伴侶將d生既肉放入口 \n
+每舊火腩都經過紅紅烈火，百度高溫 \n
+係經過歷煉, 係經過漫長既試鍊 \n
+每一舊都有佢既歷史，佢既故事 \n
+魚生究竟有d乜? 根本就好似d白痴港女錦（咁）, 一無所知, 戇鳩鳩, 生勾勾 \n
+\n
+我恨我既人生唔可以好似火腩錦 \n
+搵到咁多好既伴侶, 豆腐, 涼瓜, 冬瓜, 枝竹..各有特色 \n
+亦搵唔到咁多知音人, \n
+\n
+有時侯, 我自己一個坐o係茶記食火腩飯 \n
+我覺得自己係孤獨, 我覺得呢個世界係冇人明白我 \n
+我叫左枝青島, 我望住杯入面黃色既啤酒 \n
+我望唔透, 我望唔清究竟呢個世界仲有幾多野我係掌握到 \n
+我好迷茫 \n
+
+我離開間茶記, 我俾錢既時侯發覺有個OL食緊枝竹火腩飯 \n
+我望住佢, 佢望住我 \n
+我地互相點點頭 \n
+我好感動, 原來呢個世界仲有人係同我有相同既諗法 \n
+我忍住淚水 \n
+走出茶記, 點起支煙, \n
+頭都冇回就走返屋企 \n
+或者個OL會問, 點解我放棄呢一段咁難得既姻緣 \n
+\n
+我唔知道 \n
+o係呢一刻 \n
+我覺得我係一個浪子\n
+        
+        
+        " />
+
+</LinearLayout>

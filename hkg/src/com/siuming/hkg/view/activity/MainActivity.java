@@ -28,8 +28,7 @@ public class MainActivity extends Activity{
 		
 		GoldenConfig.init(this);
 		ap.setMainActivity(this);
-		ap.createTitleBar();
-		ap.setPageViewer();
+		ap.startApp();
 	}
 	
 }
