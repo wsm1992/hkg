@@ -1,8 +1,13 @@
-package com.siuming.hkg;
+package com.siuming.hkg.view.component;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import com.siuming.hkg.R;
+import com.siuming.hkg.R.id;
+import com.siuming.hkg.R.layout;
+import com.siuming.hkg.R.string;
 
 import android.content.Context;
 import android.os.Handler;

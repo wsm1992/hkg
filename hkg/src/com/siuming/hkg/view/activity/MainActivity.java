@@ -1,4 +1,12 @@
-package com.siuming.hkg;
+package com.siuming.hkg.view.activity;
+
+import com.siuming.hkg.GoldenConfig;
+import com.siuming.hkg.HkgTopicTitleBar;
+import com.siuming.hkg.R;
+import com.siuming.hkg.R.layout;
+import com.siuming.hkg.view.component.HkgViewPager;
+import com.siuming.hkg.view.page.ListViewPage;
+import com.siuming.hkg.view.page.RefListViewPage;
 
 import android.app.Activity;
 import android.os.Bundle;

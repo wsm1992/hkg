@@ -1,4 +1,4 @@
-package com.siuming.hkg;
+package com.siuming.hkg.view.page;
 
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SimpleAdapter;

@@ -8,10 +8,10 @@
         android:layout_height="wrap_content"
         android:text="page" />
 
-    <com.siuming.hkg.RefreshListView
+    <com.siuming.hkg.view.component.RefreshListView
         android:id="@+id/RefListView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-    </com.siuming.hkg.RefreshListView>
+    </com.siuming.hkg.view.component.RefreshListView>
 
 </LinearLayout>

@@ -1,7 +1,13 @@
-package com.siuming.hkg;
+package com.siuming.hkg.view.component;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.siuming.hkg.GoldenConfig;
+import com.siuming.hkg.MainPagerAdapter;
+import com.siuming.hkg.R;
+import com.siuming.hkg.R.color;
+import com.siuming.hkg.R.id;
 
 import android.app.Activity;
 import android.support.v4.view.PagerTabStrip;

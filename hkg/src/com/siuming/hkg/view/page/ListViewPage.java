@@ -1,4 +1,4 @@
-package com.siuming.hkg;
+package com.siuming.hkg.view.page;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +10,10 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 
+import com.siuming.hkg.GoldenConfig;
+import com.siuming.hkg.R;
+import com.siuming.hkg.R.id;
+import com.siuming.hkg.R.layout;
 import com.siuming.hkg.util.MapKey;
 
 public class ListViewPage extends LinearLayout  implements IListViewPage {

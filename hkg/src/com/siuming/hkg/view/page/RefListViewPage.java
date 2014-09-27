@@ -1,4 +1,4 @@
-package com.siuming.hkg;
+package com.siuming.hkg.view.page;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,8 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-import com.siuming.hkg.RefreshListView.RefreshListener;
+import com.siuming.hkg.GoldenConfig;
+import com.siuming.hkg.R;
+import com.siuming.hkg.R.id;
+import com.siuming.hkg.R.layout;
 import com.siuming.hkg.util.MapKey;
+import com.siuming.hkg.view.component.RefreshListView;
+import com.siuming.hkg.view.component.RefreshListView.RefreshListener;
 
 public class RefListViewPage extends LinearLayout implements IListViewPage {
 	RefreshListView listView;
