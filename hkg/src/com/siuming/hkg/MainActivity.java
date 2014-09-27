@@ -23,10 +23,13 @@ public class MainActivity extends Activity{
 		GoldenConfig.init(this);
 		setTitleBar();
 		setPageviewer();
+		setTopicView();
 	}
-	
+
 	private void setTitleBar() {
 		titlebar = new HkgTopicTitleBar(this);
+		//TODO add listener
+		//titlebar.setTitleBarListener(null);
 	}
 
 	private void setPageviewer() {
@@ -41,5 +44,9 @@ public class MainActivity extends Activity{
 		historyPage.setMockData(10);
 	}
 	
+	private void setTopicView() {
+		//TODO add listener
+		//topicPage.setOnItemClickListener(null);
+	}
 	
 }
