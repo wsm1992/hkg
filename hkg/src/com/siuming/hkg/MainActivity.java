@@ -9,7 +9,11 @@ import android.view.View;
 import android.view.Window;
 
 public class MainActivity extends Activity{
-    private HkgViewPager viewPager;//viewpager  
+	HkgTopicTitleBar titlebar;
+	
+    HkgViewPager viewPager;//viewpager  
+    RefListViewPage topicPage;
+    ListViewPage historyPage;
     
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -17,23 +21,24 @@ public class MainActivity extends Activity{
 		setContentView(R.layout.main);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar_topic);
 		GoldenConfig.init(this);
+		setTitleBar();
 		setPageviewer();
 	}
 	
+	private void setTitleBar() {
+		titlebar = new HkgTopicTitleBar(this);
+	}
+
 	private void setPageviewer() {
-		viewPager = new HkgViewPager();
-		viewPager.setViewPager((ViewPager) findViewById(R.id.viewpager));
-		viewPager.setPagerTabStripper((PagerTabStrip) findViewById(R.id.pagertab));  
+		viewPager = new HkgViewPager(this);		
+		topicPage = new RefListViewPage(this);
+		historyPage = new ListViewPage(this);
 		
-		RefListViewPage refViewPage = new RefListViewPage(this);
-		ListViewPage viewPage = new ListViewPage(this);
+		viewPager.addPage(topicPage,"主題");
+		viewPager.addPage(historyPage,"主題2");
 		
-		viewPager.addPage(refViewPage,"主題");
-		viewPager.addPage(viewPage,"主題2");
-		viewPager.init();
-		
-		refViewPage.setRefreshListView(10);
-		viewPage.setRefreshListView(10);
+		topicPage.setMockData(10);
+		historyPage.setMockData(10);
 	}
 	
 	

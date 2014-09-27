@@ -26,7 +26,7 @@ public class RefListViewPage extends LinearLayout implements IListViewPage {
 		listView.setOnRefreshListener(refreshListener);
 	}
 
-	public void setRefreshListView(int id) {
+	public void setMockData(int id) {
 		String[] keyList = new String[] { MapKey.MESSAGE_TITLE, MapKey.AUTHOR_NAME,
 				MapKey.TOTAL_REPLIES, MapKey.RATING, MapKey.MESSAGE_ID, MapKey.LAST_REPLY_DATE };
 		int[] idList = new int[] { R.id.messageTitle, R.id.auther, R.id.totalReplies, R.id.rating };
@@ -78,6 +78,12 @@ public class RefListViewPage extends LinearLayout implements IListViewPage {
 	@Override
 	public void setOnItemClickListener(OnItemClickListener impl) {
 		listView.setOnItemClickListener(impl);
+	}
+
+	@Override
+	public void setListViewAdapter(SimpleAdapter adapter) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
