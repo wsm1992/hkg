@@ -7,13 +7,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.siuming.hkg.GoldenConfig;
 import com.siuming.hkg.R;
-import com.siuming.hkg.R.id;
-import com.siuming.hkg.R.layout;
 import com.siuming.hkg.util.MapKey;
 import com.siuming.hkg.view.component.RefreshListView;
 import com.siuming.hkg.view.component.RefreshListView.RefreshListener;

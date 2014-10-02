@@ -63,6 +63,7 @@ public class AppPresenter {
 			.show();
 			GoldenConfig.setType(position);
 			topicPage.showLoading();
+			topicPagePm.requestRefresh();
 			//activityPresenter.loadRefreshList();
 		}
 

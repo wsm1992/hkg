@@ -5,15 +5,13 @@ import java.util.HashMap;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.siuming.hkg.GoldenConfig;
 import com.siuming.hkg.R;
-import com.siuming.hkg.R.id;
-import com.siuming.hkg.R.layout;
 import com.siuming.hkg.util.MapKey;
 
 public class ListViewPage extends LinearLayout  implements IListViewPage {
