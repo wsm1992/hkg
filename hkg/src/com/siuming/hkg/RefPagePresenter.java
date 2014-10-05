@@ -3,6 +3,7 @@ package com.siuming.hkg;
 import com.siuming.hkg.goldenApi.ApiModel;
 import com.siuming.hkg.goldenApi.ApiService;
 import com.siuming.hkg.goldenApi.GoldenDataHandler.ApiListener;
+import com.siuming.hkg.model.TopicPage;
 import com.siuming.hkg.view.page.RefListViewPage;
 
 public class RefPagePresenter {
@@ -46,8 +47,8 @@ public class RefPagePresenter {
 
 		@Override
 		public void onSuccess(String str) {
-			String abc = str;
-			String bbb = abc + "aaa";
+			TopicPage topicPage = new TopicPage(str);
+			page.setListViewAdapter(topicPage.getAdapter());
 		}
 
 		@Override
