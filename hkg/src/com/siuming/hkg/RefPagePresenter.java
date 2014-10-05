@@ -1,8 +1,8 @@
 package com.siuming.hkg;
 
-import com.siuming.hkg.GoldenDataHandler.ApiListener;
 import com.siuming.hkg.goldenApi.ApiModel;
 import com.siuming.hkg.goldenApi.ApiService;
+import com.siuming.hkg.goldenApi.GoldenDataHandler.ApiListener;
 import com.siuming.hkg.view.page.RefListViewPage;
 
 public class RefPagePresenter {

@@ -1,9 +1,8 @@
-package com.siuming.hkg;
+package com.siuming.hkg.goldenApi;
 
 import android.os.Handler;
 import android.os.Message;
 
-import com.siuming.hkg.goldenApi.ApiRequest;
 
 public class GetDataTask implements Runnable{
 	Handler handler;

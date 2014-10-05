@@ -1,4 +1,4 @@
-package com.siuming.hkg;
+package com.siuming.hkg.goldenApi;
 
 import android.os.Handler;
 import android.os.Message;

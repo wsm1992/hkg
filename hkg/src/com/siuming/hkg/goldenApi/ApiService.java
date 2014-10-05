@@ -1,9 +1,7 @@
 package com.siuming.hkg.goldenApi;
 import android.os.Handler;
 
-import com.siuming.hkg.GetDataTask;
-import com.siuming.hkg.GoldenDataHandler;
-import com.siuming.hkg.GoldenDataHandler.ApiListener;
+import com.siuming.hkg.goldenApi.GoldenDataHandler.ApiListener;
 
 public class ApiService {
 	ApiListener apiListener;
