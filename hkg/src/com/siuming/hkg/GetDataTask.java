@@ -1,36 +1,28 @@
 package com.siuming.hkg;
 
-import org.apache.http.HttpStatus;
-
-import com.siuming.hkg.goldenApi.ApiRequest;
-
 import android.os.Handler;
 import android.os.Message;
 
+import com.siuming.hkg.goldenApi.ApiRequest;
+
 public class GetDataTask implements Runnable{
 	Handler handler;
-	int page;
+	String website;
 	ApiRequest apiRequest;
 	
-	public GetDataTask(Handler handler,int page) {
+	public GetDataTask(Handler handler,String website) {
 		super();
 		this.handler = handler;
-		this.page = page;
+		this.website = website;
 	}
 
 	@Override
 	public void run() {
 		apiRequest = new ApiRequest();
-		String resultListJsonStr = getResultJsonStr();
+		String resultListJsonStr = apiRequest.requestData(website);
 		Message msg = Message.obtain();
 		msg.obj = resultListJsonStr;
-		msg.arg1 = page;
 		msg.what = apiRequest.getHttpStatus();
 		handler.sendMessage(msg);
-	}
-
-	private String getResultJsonStr() {
-		//TODO 分為取topic和取post
-		return apiRequest.requestTopicListJson(page);
 	}
 }

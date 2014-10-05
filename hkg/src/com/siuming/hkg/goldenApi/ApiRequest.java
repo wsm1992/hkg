@@ -11,49 +11,15 @@ import org.apache.http.util.EntityUtils;
 
 import android.net.http.AndroidHttpClient;
 
-import com.siuming.hkg.GoldenConfig;
-
 public class ApiRequest {
 
 	AndroidHttpClient client;
 	HttpResponse response;
 	HttpGet httpGet;
 	int httpStatus = -1;
-	String httpStatusStr;
-	/**
-	 * API web site
-	 */
-	final static String site = "http://apps.hkgolden.com/";
-	String goal;
-	String path;
-	/**
-	 * API web site parameters
-	 */
-	String type = "BW";
-	int page = 1;
-	String filtermode;
-	String sensormode;
-	String returntype = "json";
-	String messageId;
+	String httpStatusStr;	
 
-	/**
-	 * result of request from API in Json format
-	 */
-	public String requestTopicListJson(int page) {
-		abortHttpGet();
-		String url = initTopicUrl(page);
-		String result = getApiResponse(url);
-		return result;
-	}
-
-	public String requestPostListJson(int page) {
-		abortHttpGet();
-		String url = initPostUrl(page);
-		String result = getApiResponse(url);
-		return result;
-	}
-
-	private String getApiResponse(String url) {
+	public String requestData(String url) {
 		String result = "";
 		try {
 			executeHttpGet(url);
@@ -91,38 +57,6 @@ public class ApiRequest {
 	}
 
 	/**
-	 * init the web site of API
-	 */
-	private String initTopicUrl(int page) {
-		this.page = page;
-		goal = "newTopics";
-		String url = initUrl();
-		return url;
-	}
-
-	private String initPostUrl(int page) {
-		this.page = page;
-		goal = "newView";
-		String url = initUrl();
-		url += "&message=" + messageId;
-		return url;
-	}
-
-	private String initUrl() {
-		path = "android_api/v_1_0/" + goal + ".aspx";
-		type = GoldenConfig.getTypeShot();
-		filtermode = GoldenConfig.getFilterMode()?"Y":"N";
-		sensormode = GoldenConfig.getSensorMode()?"Y":"N";
-		String url = site + path + "?";
-		url += "type=" + type;
-		url += "&page=" + page;
-		url += "&filtermode=" + filtermode;
-		url += "&sensormode=" + sensormode;
-		url += "&returntype=" + returntype;
-		return url;
-	}
-
-	/**
 	 * execute the HTTP request
 	 */
 	private void executeHttpGet(String url) throws IOException {
@@ -146,10 +80,6 @@ public class ApiRequest {
 
 	public int getHttpStatus() {
 		return httpStatus;
-	}
-	
-	public void setMessageId(String messageId) {
-		this.messageId = messageId;
-	}
+	}	
 
 }
