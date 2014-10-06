@@ -46,7 +46,7 @@ public class AppPresenter {
 		
 		topicPagePm = new RefPagePresenter(topicPage);
 		
-		topicPage.setMockData(10);
+		//topicPage.setMockData(0);
 		historyPage.setMockData(10);		
 	}
 	
@@ -62,9 +62,8 @@ public class AppPresenter {
 			Toast.makeText(mainActivity, "selected " + position, Toast.LENGTH_SHORT)
 			.show();
 			GoldenConfig.setType(position);
-			topicPage.showLoading();
 			topicPagePm.requestRefresh();
-			//activityPresenter.loadRefreshList();
+			topicPage.showLoading();
 		}
 
 		@Override
