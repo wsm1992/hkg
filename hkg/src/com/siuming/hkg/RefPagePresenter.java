@@ -10,39 +10,49 @@ import com.siuming.hkg.view.page.RefListViewPage;
 public class RefPagePresenter {
 	RefListViewPage page;
 	TopicPageList topicPageList;
+	int showedPage = 0;
+	int updatedPage = 0;
+	boolean isUpdating = false;
+	boolean isWaiting = false;
 	
 	public RefPagePresenter(RefListViewPage p){
 		page = p;
 		topicPageList = new TopicPageList();
 		
 		page.setOnRefreshListener(new RefreshListenerImpl());
-		page.setListViewAdapter(topicPageList.getAdapter());
-		page.showLoading();
-		
+		page.setListViewAdapter(topicPageList.getAdapter());		
 	}
 	
 	public void requestRefresh(){
-		ApiService apiService = new ApiService(new ApiListenerImpl());
+		page.showLoading();
+		page.showMessage("loading request");
+		
+		ApiService apiService = new ApiService(new ApiListenerImplRefresh());
 		apiService.setThreadName("get Topic List");
 		
 		ApiModel apiModel = new ApiModel();
 		setModelConfig(apiModel);
 		apiModel.setGoal(ApiModel.TOPIC);
 		apiModel.setPage(1);
+
+		topicPageList.clear();
 		
+		isUpdating = true;
 		apiService.request(apiModel);
 	}
 	
 	public void requestUpdate(int page){
-		ApiService apiService = new ApiService(new ApiListenerImpl());
-		apiService.setThreadName("get Topic List");
-		
-		ApiModel apiModel = new ApiModel();
-		setModelConfig(apiModel);
-		apiModel.setGoal(ApiModel.TOPIC);
-		apiModel.setPage(page);
-		
-		apiService.request(apiModel);
+		if(!isUpdating){
+			ApiService apiService = new ApiService(new ApiListenerImplRefresh());
+			apiService.setThreadName("get Topic List");
+			
+			ApiModel apiModel = new ApiModel();
+			setModelConfig(apiModel);
+			apiModel.setGoal(ApiModel.TOPIC);
+			apiModel.setPage(page);
+			isUpdating = true;
+			apiService.request(apiModel);
+		}
 	}
 
 	private void setModelConfig(ApiModel apiModel) {
@@ -51,19 +61,40 @@ public class RefPagePresenter {
 		apiModel.setType(GoldenConfig.getTypeShot());
 	}
 	
-	class ApiListenerImpl implements ApiListener{
+	class ApiListenerImplRefresh implements ApiListener{
 
 		@Override
 		public void onSuccess(String str) {
 			topicPageList.addTopicPage(str);
+			topicPageList.updateHashMapList(0);
 			page.unShowLoading();
-			//TopicPage topicPage = new TopicPage(str);
-			//page.setListViewAdapter(topicPage.getAdapter());
+			page.showMessage("load complete 1");
+			showedPage = 1;
+			updatedPage = 1;
 		}
 
 		@Override
 		public void ontFail(String str) {
+			page.showMessage(str);
+		}		
+	}
+	
+	class ApiListenerImplUpdate implements ApiListener{
 
+		@Override
+		public void onSuccess(String str) {
+			topicPageList.addTopicPage(str);
+			updatedPage++;
+			isUpdating = false;
+		}
+
+		@Override
+		public void ontFail(String str) {
+			page.showMessage(str);
+			isUpdating = false;
+			if(isWaiting){
+				topicPageList.updateHashMapList(updatedPage++);
+			}
 		}		
 	}
 	
@@ -71,14 +102,12 @@ public class RefPagePresenter {
 
 		@Override
 		public void refreshing() {
-			// TODO Auto-generated method stub
-			
+			requestRefresh();
 		}
 
 		@Override
 		public void loadUpdate() {
-			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
@@ -89,8 +118,7 @@ public class RefPagePresenter {
 
 		@Override
 		public void waitUpdate() {
-			// TODO Auto-generated method stub
-			
+			isWaiting = true;
 		}
 		
 	}

@@ -24,11 +24,10 @@ public class TopicPageList {
 	public void addTopicPage(String str){
 		TopicPage temp = new TopicPage(str);
 		topicPageList.add(temp);
-		updateHashMapList();
 	}
 	
-	private void updateHashMapList() {
-		TopicPage page = topicPageList.get(topicPageList.size()-1);
+	public void updateHashMapList(int index) {
+		TopicPage page = topicPageList.get(index);
 		for(int i=0;i<page.getTopicList().size();i++){
 			Topic temp = page.getTopicList().get(i);
 			HashMap<String, Object> map;
@@ -42,27 +41,13 @@ public class TopicPageList {
 			hashMaplist.add(map);
 		}
 	}
-
-	private void createSimpleAdapter() {
-		/*for(int j=0; j<topicPageList.size();j++){
-			TopicPage topicList = topicPageList.get(j);
-			for(int i=0;i<topicList.getTopicList().size();i++){
-				Topic temp = topicList.getTopicList().get(i);
-				HashMap<String, Object> map;
-				map = new HashMap<String, Object>();
-				map.put(MapKey.MESSAGE_TITLE, temp.getMessageTitle());
-				map.put(MapKey.AUTHOR_NAME, temp.getAutherName());
-				map.put(MapKey.TOTAL_REPLIES, temp.getTotalReplies());
-				map.put(MapKey.RATING, temp.getRatingStr());
-				map.put(MapKey.MESSAGE_ID, temp.getMessageId());
-				map.put(MapKey.LAST_REPLY_DATE, temp.getLastReplayDate());
-				hashMaplist.add(map);
-			}
-		}*/
-		adapter = new SimpleAdapter(GoldenConfig.getContext(), hashMaplist, layoutId, keyList, idList);
-	}
 	
 	public SimpleAdapter getAdapter(){
 		return adapter;
+	}
+
+	public void clear() {
+		topicPageList.clear();
+		hashMaplist.clear();
 	}
 }

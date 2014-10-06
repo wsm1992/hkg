@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.siuming.hkg.GoldenConfig;
 import com.siuming.hkg.R;
@@ -18,12 +19,14 @@ import com.siuming.hkg.view.component.RefreshListView.RefreshListener;
 public class RefListViewPage extends LinearLayout implements IListViewPage {
 	RefreshListView listView;
 	boolean isShowingLoading;
+	TextView textView;
 	LinearLayout LoadingLayout;
 
 	public RefListViewPage(Context context) {
 		super(context, null);
 		LayoutInflater.from(context).inflate(R.layout.ref_list_view_page, this);
 		listView = (RefreshListView) findViewById(R.id.RefListView1);
+		textView = (TextView) findViewById(R.id.textView1);
 		LoadingLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.subview_loading, null);
 	}
 	
@@ -63,6 +66,10 @@ public class RefListViewPage extends LinearLayout implements IListViewPage {
 	public void unShowLoading(){
 		listView.removeHeaderView(LoadingLayout);
 		isShowingLoading = false;
+	}
+	
+	public void showMessage(String message){
+		textView.setText(message);
 	}
 
 }
