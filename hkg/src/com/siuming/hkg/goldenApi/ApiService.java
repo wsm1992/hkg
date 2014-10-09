@@ -1,8 +1,7 @@
 package com.siuming.hkg.goldenApi;
 import android.os.Handler;
 
-import com.siuming.hkg.goldenApi.GoldenDataHandler.ApiListener;
-
+//the facade of Golden Api
 public class ApiService {
 	ApiListener apiListener;
 	String threadName;

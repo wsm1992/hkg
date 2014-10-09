@@ -4,7 +4,7 @@ import android.os.Handler;
 import android.os.Message;
 
 
-public class GetDataTask implements Runnable{
+class GetDataTask implements Runnable{
 	Handler handler;
 	String website;
 	ApiRequest apiRequest;

@@ -8,6 +8,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.Spinner;
 
+// the view of main title bar
 public class HkgTopicTitleBar {
 	Spinner spinnerType;
 	Button buttonAddTopic;

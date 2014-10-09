@@ -3,7 +3,7 @@ package com.siuming.hkg.goldenApi;
 import android.os.Handler;
 import android.os.Message;
 
-public class GoldenDataHandler extends Handler{
+class GoldenDataHandler extends Handler{
 	ApiListener apiListener;
 	
 	public GoldenDataHandler(ApiListener handlerListener){
@@ -29,10 +29,5 @@ public class GoldenDataHandler extends Handler{
 
 	private boolean isSucess(Message msg) {
 		return msg.what == 200;
-	}
-
-	public interface ApiListener{
-		public void onSuccess(String str);
-		public void ontFail(String str);
-	}
+	}	
 }

@@ -1,6 +1,6 @@
 package com.siuming.hkg.goldenApi;
 
-
+//create the url for get golden data
 public class ApiModel {
 	/**
 	 * API web site

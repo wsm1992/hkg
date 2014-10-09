@@ -24,6 +24,7 @@ public class Topic {
 	String rating;
 
 
+	//creage Topic model from json
 	public Topic(JSONObject topicJobj) {
 		try {
 			messageId = topicJobj.getString(MESSAGE_ID);

@@ -34,17 +34,6 @@ public class RefListViewPage extends LinearLayout implements IListViewPage {
 		listView.setOnRefreshListener(refreshListener);
 	}
 
-	public void setMockData(int id) {
-		String[] keyList = new String[] { MapKey.MESSAGE_TITLE};
-		int[] idList = new int[] { R.id.messageTitle};
-		int layoutId = R.layout.subview_topic;
-		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
-		
-		SimpleAdapter adapter = new SimpleAdapter(GoldenConfig.getContext(), list, layoutId, keyList, idList);
-		listView.setAdapter(adapter);	
-		
-	}
-
 	@Override
 	public void setOnItemClickListener(OnItemClickListener impl) {
 		listView.setOnItemClickListener(impl);
@@ -74,4 +63,7 @@ public class RefListViewPage extends LinearLayout implements IListViewPage {
 		textView.setText(message);
 	}
 
+	public void setSelection(int page){
+		listView.setSelection(page);
+	}
 }

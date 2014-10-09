@@ -11,6 +11,7 @@ import com.siuming.hkg.view.component.HkgViewPager;
 import com.siuming.hkg.view.page.ListViewPage;
 import com.siuming.hkg.view.page.RefListViewPage;
 
+//for main logic
 public class AppPresenter {
 	MainActivity mainActivity;
 	
@@ -20,7 +21,7 @@ public class AppPresenter {
     RefListViewPage topicPage;
     ListViewPage historyPage;
     
-    RefPagePresenter topicPagePm;
+    RefPagePresenter topicPagePresenter;
     
     public void startApp(){
 		createTitleBar();
@@ -44,9 +45,8 @@ public class AppPresenter {
 		viewPager.addPage(topicPage,"主題");
 		viewPager.addPage(historyPage,"主題2");
 		
-		topicPagePm = new RefPagePresenter(topicPage);
+		topicPagePresenter = new RefPagePresenter(topicPage);
 		
-		//topicPage.setMockData(0);
 		historyPage.setMockData(10);		
 	}
 	
@@ -57,13 +57,13 @@ public class AppPresenter {
 
 	private class TitleBarListenerImpl implements TitleBarListener{
 
+		//this function will start in the beginning, so app will load topic whe start app
 		@Override
 		public void onSpinnerSelected(AdapterView<?> parent, View view, int position, long arg3) {
 			Toast.makeText(mainActivity, "selected " + position, Toast.LENGTH_SHORT)
 			.show();
 			GoldenConfig.setType(position);
-			topicPagePm.requestRefresh();
-			topicPage.showLoading();
+			topicPagePresenter.requestRefresh();
 		}
 
 		@Override

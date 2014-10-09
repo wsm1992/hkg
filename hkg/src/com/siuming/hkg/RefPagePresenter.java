@@ -1,12 +1,13 @@
 package com.siuming.hkg;
 
+import com.siuming.hkg.goldenApi.ApiListener;
 import com.siuming.hkg.goldenApi.ApiModel;
 import com.siuming.hkg.goldenApi.ApiService;
-import com.siuming.hkg.goldenApi.GoldenDataHandler.ApiListener;
 import com.siuming.hkg.model.TopicPageList;
 import com.siuming.hkg.view.component.RefreshListView.RefreshListener;
 import com.siuming.hkg.view.page.RefListViewPage;
 
+//control the logic of refresh page
 public class RefPagePresenter {
 	RefListViewPage page;
 	TopicPageList topicPageList;
@@ -26,9 +27,9 @@ public class RefPagePresenter {
 	public void requestRefresh(){
 		page.showLoading();
 		page.showMessage("loading request");
-		
-		loadTopic(1);
+
 		topicPageList.clear();
+		loadTopic(1);
 		isWaiting = true;
 	}
 	
@@ -76,6 +77,9 @@ public class RefPagePresenter {
 			if(isWaiting){
 				topicPageList.updateHashMapList();
 				isWaiting = false;
+				if(topicPageList.showedPage()==1){
+					page.setSelection(1);
+				}
 			}
 		}
 

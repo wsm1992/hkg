@@ -9,9 +9,11 @@ import com.siuming.hkg.GoldenConfig;
 import com.siuming.hkg.R;
 import com.siuming.hkg.util.MapKey;
 
+//contain the Topic list
 public class TopicPageList {
 	ArrayList<TopicPage> topicPageList = new ArrayList<TopicPage>();
 	
+	// data for adapter
 	int layoutId = R.layout.subview_topic;
 	String[] keyList = new String[] { MapKey.MESSAGE_TITLE, MapKey.AUTHOR_NAME, MapKey.TOTAL_REPLIES,
 			MapKey.RATING, MapKey.MESSAGE_ID ,MapKey.LAST_REPLY_DATE};
@@ -23,6 +25,7 @@ public class TopicPageList {
 	int bufferSize = 0;
 	int showedPage = 0;
 	
+	//add topic Page with json string
 	public void addTopicPage(String str){
 		TopicPage temp = new TopicPage(str);
 		topicPageList.add(temp);
@@ -66,6 +69,10 @@ public class TopicPageList {
 
 	public int loadedPage() {
 		return topicPageList.size();
+	}
+
+	public int showedPage() {
+		return showedPage;
 	}
 
 	public boolean canLoad() {
