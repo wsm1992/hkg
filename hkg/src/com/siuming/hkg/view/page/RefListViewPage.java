@@ -63,9 +63,11 @@ public class RefListViewPage extends LinearLayout implements IListViewPage {
 		listView.setSelection(1);
 	}
 	
-	public void unShowLoading(){
-		listView.removeHeaderView(LoadingLayout);
-		isShowingLoading = false;
+	public void unShowLoading() {
+		if (isShowingLoading) {
+			listView.removeHeaderView(LoadingLayout);
+			isShowingLoading = false;
+		}
 	}
 	
 	public void showMessage(String message){

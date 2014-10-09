@@ -20,25 +20,33 @@ public class TopicPageList {
 	ArrayList<HashMap<String, Object>> hashMaplist = new ArrayList<HashMap<String, Object>>();
 	SimpleAdapter adapter= new SimpleAdapter(GoldenConfig.getContext(), hashMaplist, layoutId, keyList, idList);
 	
+	int bufferSize = 0;
+	int showedPage = 0;
 	
 	public void addTopicPage(String str){
 		TopicPage temp = new TopicPage(str);
 		topicPageList.add(temp);
 	}
 	
-	public void updateHashMapList(int index) {
-		TopicPage page = topicPageList.get(index);
-		for(int i=0;i<page.getTopicList().size();i++){
-			Topic temp = page.getTopicList().get(i);
-			HashMap<String, Object> map;
-			map = new HashMap<String, Object>();
-			map.put(MapKey.MESSAGE_TITLE, temp.getMessageTitle());
-			map.put(MapKey.AUTHOR_NAME, temp.getAutherName());
-			map.put(MapKey.TOTAL_REPLIES, temp.getTotalReplies());
-			map.put(MapKey.RATING, temp.getRatingStr());
-			map.put(MapKey.MESSAGE_ID, temp.getMessageId());
-			map.put(MapKey.LAST_REPLY_DATE, temp.getLastReplayDate());
-			hashMaplist.add(map);
+	public boolean updateHashMapList() {
+		if(topicPageList.size()>showedPage){
+			TopicPage page = topicPageList.get(showedPage++);
+			for(int i=0;i<page.getTopicList().size();i++){
+				Topic temp = page.getTopicList().get(i);
+				HashMap<String, Object> map;
+				map = new HashMap<String, Object>();
+				map.put(MapKey.MESSAGE_TITLE, temp.getMessageTitle());
+				map.put(MapKey.AUTHOR_NAME, temp.getAutherName());
+				map.put(MapKey.TOTAL_REPLIES, temp.getTotalReplies());
+				map.put(MapKey.RATING, temp.getRatingStr());
+				map.put(MapKey.MESSAGE_ID, temp.getMessageId());
+				map.put(MapKey.LAST_REPLY_DATE, temp.getLastReplayDate());
+				hashMaplist.add(map);
+				adapter.notifyDataSetChanged();
+			}
+			return true;
+		}else{
+			return false;
 		}
 	}
 	
@@ -47,7 +55,22 @@ public class TopicPageList {
 	}
 
 	public void clear() {
+		showedPage = 0;
 		topicPageList.clear();
 		hashMaplist.clear();
 	}
+	
+	public void setBufferSize(int size){
+		bufferSize = size;
+	}
+
+	public int loadedPage() {
+		return topicPageList.size();
+	}
+
+	public boolean canLoad() {
+		return topicPageList.size() - showedPage < bufferSize;
+	}
+	
+	
 }
