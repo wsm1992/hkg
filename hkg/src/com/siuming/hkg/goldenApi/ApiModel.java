@@ -19,7 +19,7 @@ public class ApiModel {
 	String messageId;
 	
 	public static int TOPIC = 0;
-	public static int POST = 1;
+	public static int REPLY = 1;
 	
 	//topic or post 
 	public void setGoal(int goal) {
@@ -54,6 +54,9 @@ public class ApiModel {
 		url += "&filtermode=" + filtermode;
 		url += "&sensormode=" + sensormode;
 		url += "&returntype=" + returntype;
+		if(messageId != null){
+			url += "&message=" + messageId;
+		}
 		return url;
 	}
 }

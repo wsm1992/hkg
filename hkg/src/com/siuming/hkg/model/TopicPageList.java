@@ -31,7 +31,7 @@ public class TopicPageList {
 		topicPageList.add(temp);
 	}
 	
-	public boolean updateHashMapList() {
+	public boolean updateData() {
 		if(topicPageList.size()>showedPage){
 			TopicPage page = topicPageList.get(showedPage++);
 			for(int i=0;i<page.getTopicList().size();i++){
@@ -45,8 +45,8 @@ public class TopicPageList {
 				map.put(MapKey.MESSAGE_ID, temp.getMessageId());
 				map.put(MapKey.LAST_REPLY_DATE, temp.getLastReplayDate());
 				hashMaplist.add(map);
-				adapter.notifyDataSetChanged();
 			}
+			adapter.notifyDataSetChanged();
 			return true;
 		}else{
 			return false;

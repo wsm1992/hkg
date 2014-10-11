@@ -8,14 +8,14 @@ import com.siuming.hkg.view.component.RefreshListView.RefreshListener;
 import com.siuming.hkg.view.page.RefListViewPage;
 
 //control the logic of refresh page
-public class RefPagePresenter {
+public class TopicPresenter {
 	RefListViewPage page;
 	TopicPageList topicPageList;
 	boolean isUpdating = false;
 	boolean isWaiting = true;
 	ApiListener apiListener = new ApiListenerImpl();
 	
-	public RefPagePresenter(RefListViewPage p){
+	public TopicPresenter(RefListViewPage p){
 		page = p;
 		topicPageList = new TopicPageList();
 		topicPageList.setBufferSize(3);
@@ -71,11 +71,11 @@ public class RefPagePresenter {
 			page.unShowLoading();
 			page.showMessage("load complete "+topicPageList.loadedPage());
 			if(topicPageList.canLoad()){
-				requestUpdate(topicPageList.loadedPage());
+				requestUpdate(topicPageList.loadedPage() + 1);
 			}
 			
 			if(isWaiting){
-				topicPageList.updateHashMapList();
+				topicPageList.updateData();
 				isWaiting = false;
 				if(topicPageList.showedPage()==1){
 					page.setSelection(1);
@@ -111,7 +111,7 @@ public class RefPagePresenter {
 
 		@Override
 		public void waitUpdate() {
-			if(!topicPageList.updateHashMapList()){
+			if(!topicPageList.updateData()){
 				isWaiting = true;	
 			}	
 			if(topicPageList.canLoad()){

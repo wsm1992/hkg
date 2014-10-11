@@ -13,7 +13,7 @@ import com.siuming.hkg.GoldenConfig;
 import com.siuming.hkg.R;
 import com.siuming.hkg.util.MapKey;
 
-//cotain one topic page data
+//contain one topic page data
 class TopicPage {
 	ArrayList<Topic> topicList;
 		

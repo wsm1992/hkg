@@ -31,22 +31,25 @@ public final class R {
     public static final class id {
         public static final int ListView1=0x7f08000a;
         public static final int RefListView1=0x7f080003;
-        public static final int auther=0x7f08000d;
-        public static final int buttonAddTopic=0x7f080012;
-        public static final int buttonSetting=0x7f080011;
-        public static final int messageTitle=0x7f08000c;
+        public static final int auther=0x7f080010;
+        public static final int buttonAddTopic=0x7f080015;
+        public static final int buttonSetting=0x7f080014;
+        public static final int messageTitle=0x7f08000f;
         public static final int pagertab=0x7f080001;
-        public static final int rating=0x7f08000f;
+        public static final int rating=0x7f080012;
         public static final int refresh_list_header_last_update=0x7f080009;
         public static final int refresh_list_header_progressbar=0x7f080005;
         public static final int refresh_list_header_pull_down=0x7f080006;
         public static final int refresh_list_header_release_up=0x7f080007;
         public static final int refresh_list_header_text=0x7f080008;
-        public static final int spinnerType=0x7f080010;
+        public static final int spinnerType=0x7f080013;
         public static final int textView1=0x7f080002;
+        public static final int textViewAuthorName=0x7f08000c;
+        public static final int textViewDate=0x7f08000d;
         public static final int textViewFashionArticle=0x7f08000b;
         public static final int textViewFooter=0x7f080004;
-        public static final int totalReplies=0x7f08000e;
+        public static final int textViewMessageBody=0x7f08000e;
+        public static final int totalReplies=0x7f080011;
         public static final int viewpager=0x7f080000;
     }
     public static final class layout {
@@ -56,8 +59,9 @@ public final class R {
         public static final int refresh_list_header=0x7f030003;
         public static final int simple_list_view_page=0x7f030004;
         public static final int subview_loading=0x7f030005;
-        public static final int subview_topic=0x7f030006;
-        public static final int titlebar_topic=0x7f030007;
+        public static final int subview_reply=0x7f030006;
+        public static final int subview_topic=0x7f030007;
+        public static final int titlebar_topic=0x7f030008;
     }
     public static final class string {
         public static final int app_list_header_refresh_down=0x7f060002;
