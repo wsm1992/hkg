@@ -19,7 +19,9 @@ import com.siuming.hkg.view.page.RefListViewPage;
 
 //for main logic
 public class AppPresenter {
+	static AppPresenter ap;
 	MainActivity mainActivity;
+	ReplyActivity replyActivity;
 	
 	HkgTopicTitleBar topicTitleBar;
 	
@@ -29,11 +31,20 @@ public class AppPresenter {
     
     TopicPresenter topicPagePresenter;
     
+	public static AppPresenter getInstance() {
+		if(ap ==null){
+			ap = new AppPresenter();
+		}
+		return ap;
+	}
+	
     public void startApp(){
 		createTitleBar();
 		createPageViewer();
 		setListener();
     }
+
+
 
 	public void setMainActivity(MainActivity activity) {
 		mainActivity = activity;
@@ -91,19 +102,37 @@ public class AppPresenter {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long arg3) {
 			ListView listView = (ListView) parent;
-			@SuppressWarnings("unchecked")
-			HashMap<String, Object> map = (HashMap<String, Object>) listView
-					.getItemAtPosition(position);
-			String messageId = (String) map.get(MapKey.MESSAGE_ID);
-			Toast.makeText(GoldenConfig.getContext(), messageId, Toast.LENGTH_SHORT).show();
+			try {
+				@SuppressWarnings("unchecked")
+				HashMap<String, Object> map = (HashMap<String, Object>) listView
+						.getItemAtPosition(position);
+				String messageId = (String) map.get(MapKey.MESSAGE_ID);
+				String messageTitle = (String) map.get(MapKey.MESSAGE_TITLE);
 
-			//load data
-			ReplyPresenter postPresenter = new ReplyPresenter(messageId);
-			postPresenter.requestUpdate(1);
+				Toast.makeText(GoldenConfig.getContext(), messageId, Toast.LENGTH_SHORT).show();
 
-			//create Activity
-			ReplyActivity replyActivity = new ReplyActivity();
+				// load data
+				ReplyPresenter postPresenter = new ReplyPresenter(messageId);
+				postPresenter.requestUpdate(1);
+				ReplyPresenterList replyPresenterList = ReplyPresenterList.getInstance();
+				replyPresenterList.addPresenter(messageId, postPresenter);
+
+				// create Activity
+				ReplyActivity replyActivity = new ReplyActivity();
+				Intent intent = new Intent();
+				intent.setClass(mainActivity, replyActivity.getClass());
+				intent.putExtra(MapKey.MESSAGE_TITLE, messageTitle);
+				intent.putExtra(MapKey.MESSAGE_ID, messageId);
+				mainActivity.startActivity(intent);
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+			}
 		}
-		
+	}
+
+	public void setReplyActivity(ReplyActivity activity, String messageId) {
+		replyActivity = activity;
+		ReplyPresenter replyPresenter = ReplyPresenterList.getInstance().getPresenter(messageId);
+		replyPresenter.setActivity(replyActivity);
 	}
 }

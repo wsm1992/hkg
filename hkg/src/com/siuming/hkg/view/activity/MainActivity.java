@@ -9,7 +9,7 @@ import com.siuming.hkg.GoldenConfig;
 import com.siuming.hkg.R;
 
 public class MainActivity extends Activity{
-	AppPresenter ap = new AppPresenter();    
+	AppPresenter ap = AppPresenter.getInstance();    
     
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

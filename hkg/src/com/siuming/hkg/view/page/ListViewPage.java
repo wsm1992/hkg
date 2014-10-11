@@ -52,8 +52,7 @@ public class ListViewPage extends LinearLayout  implements IListViewPage {
 
 	@Override
 	public void setListViewAdapter(SimpleAdapter adapter) {
-		// TODO Auto-generated method stub
-		
+		listView.setAdapter(adapter);
 	}
 
 }

@@ -9,10 +9,11 @@ import com.siuming.hkg.model.ReplyPageList;
 import com.siuming.hkg.view.activity.ReplyActivity;
 import com.siuming.hkg.view.component.HkgViewPager;
 import com.siuming.hkg.view.page.ListViewPage;
+import com.siuming.hkg.view.page.RefListViewPage;
 
 public class ReplyPresenter {
 	ReplyActivity activity;
-	//HkgViewPager viewPager;
+	HkgViewPager viewPager;
 	String messageId;
 	ArrayList<ListViewPage> pageList;
 	ReplyPageList replyPageList;
@@ -26,13 +27,24 @@ public class ReplyPresenter {
 		messageId = id;
 		replyPageList = new ReplyPageList();
 		replyPageList.setBufferSize(3);
+		pageList = new ArrayList<ListViewPage>();
+	}
+	
+	public void setActivity(ReplyActivity replyActivity) {
+		activity = replyActivity;
+		viewPager = new HkgViewPager(activity);
+		
+		if(replyPageList.loadedPage()>0){
+			ListViewPage page = new ListViewPage(activity);
+			//pageList.add(page);
+			viewPager.addPage(page, "第"+1+"頁");
+			page.setListViewAdapter(replyPageList.getAdapter(0));
+		}else{
+			isWaiting = true;
+		}
 	}
 
 	public void requestUpdate(int pageNumber){
-		//ListViewPage page = new ListViewPage(activity);
-		//pageList.add(page);
-		//viewPager.addPage(page, "第"+page+"頁");
-		//page.setListViewAdapter(replyPageList.getAdapter(pageNumber));
 		loadPost(pageNumber);
 	}	
 
@@ -70,10 +82,16 @@ public class ReplyPresenter {
 				requestUpdate(replyPageList.loadedPage() + 1);
 			}
 			
-			if(isWaiting){
+
+				if(viewPager!=null){
+					ListViewPage page = new ListViewPage(activity);
+					//pageList.add(page);
+					viewPager.addPage(page, "第"+replyPageList.loadedPage()+"頁");
+					page.setListViewAdapter(replyPageList.getAdapter(replyPageList.loadedPage()-1));
+				}
 				replyPageList.updateData();
 				isWaiting = false;
-			}
+			
 		}
 
 		@Override
