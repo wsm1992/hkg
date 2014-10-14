@@ -20,7 +20,6 @@ public class ReplyPresenter {
 	
 	boolean isUpdating = false;
 	boolean isWaiting = true;
-	ApiListener apiListener = new ApiListenerImpl();
 	
 	
 	public ReplyPresenter(String id) {
@@ -34,11 +33,11 @@ public class ReplyPresenter {
 		activity = replyActivity;
 		viewPager = new HkgViewPager(activity);
 		
-		if(replyPageList.loadedPage()>0){
-			ListViewPage page = new ListViewPage(activity);
-			//pageList.add(page);
-			viewPager.addPage(page, "第"+1+"頁");
-			page.setListViewAdapter(replyPageList.getAdapter(0));
+		if(replyPageList.loadedFirstPage()){
+			ListViewPage pageView = new ListViewPage(activity);
+			int firstPage = replyPageList.getFirstPage();
+			viewPager.addPage(pageView, "第"+firstPage+"頁");
+			pageView.setListViewAdapter(replyPageList.getAdapter(firstPage));
 		}else{
 			isWaiting = true;
 		}
@@ -49,7 +48,7 @@ public class ReplyPresenter {
 	}	
 
 	private void loadPost(int page) {
-		ApiService apiService = new ApiService(apiListener);
+		ApiService apiService = new ApiService(new ApiListenerImpl(page));
 		apiService.setThreadName("get Topic List");			
 		ApiModel apiModel = createGetReplyModel(page);
 		apiService.request(apiModel);		
@@ -72,32 +71,39 @@ public class ReplyPresenter {
 	}
 	
 	class ApiListenerImpl implements ApiListener{
-
+		int page;
+		
+		public ApiListenerImpl(int p){
+			page = p;
+		}
+		
 		@Override
 		public void onSuccess(String str) {
-			replyPageList.addReplyPage(str);
+			replyPageList.addReplyPage(str,page);
 			isUpdating = false;
 			
-			if(replyPageList.canLoad()){
-				requestUpdate(replyPageList.loadedPage() + 1);
+			if (replyPageList.canLoad()) {
+				requestUpdate(replyPageList.nextToLoad());
 			}
 			
 
-				if(viewPager!=null){
-					ListViewPage page = new ListViewPage(activity);
-					//pageList.add(page);
-					viewPager.addPage(page, "第"+replyPageList.loadedPage()+"頁");
-					page.setListViewAdapter(replyPageList.getAdapter(replyPageList.loadedPage()-1));
-				}
+			if(viewPager!=null){
+				ListViewPage pageView = new ListViewPage(activity);
+				//pageList.add(page);
+				viewPager.addPage(pageView, "第"+page+"頁");
+				pageView.setListViewAdapter(replyPageList.getAdapter(page));
+			}
+			
+			if(true){//waiting is true
 				replyPageList.updateData();
 				isWaiting = false;
-			
+			}			
 		}
 
 		@Override
 		public void ontFail(String str) {
 			isUpdating = false;
-			requestUpdate(replyPageList.loadedPage());
+			//requestUpdate(replyPageList.loadedPage());
 		}		
 	}
 }

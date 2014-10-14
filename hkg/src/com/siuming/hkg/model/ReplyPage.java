@@ -64,4 +64,8 @@ public class ReplyPage {
 	SimpleAdapter getAdapter(){
 		return adapter;
 	}
+	
+	boolean existData(){
+		return replyList.size()>0;
+	}
 }

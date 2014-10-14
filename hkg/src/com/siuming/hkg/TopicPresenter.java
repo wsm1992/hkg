@@ -87,8 +87,8 @@ public class TopicPresenter {
 		public void ontFail(String str) {
 			page.showMessage(str);
 			isUpdating = false;
-			requestUpdate(topicPageList.loadedPage());
-			page.showMessage(str+", loading requst again");
+			//requestUpdate(topicPageList.loadedPage());
+			//page.showMessage(str+", loading requst again");
 		}		
 	}
 	

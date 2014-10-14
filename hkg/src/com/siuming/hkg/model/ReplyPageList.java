@@ -1,49 +1,43 @@
 package com.siuming.hkg.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import android.widget.SimpleAdapter;
-
-import com.siuming.hkg.GoldenConfig;
-import com.siuming.hkg.R;
-import com.siuming.hkg.util.MapKey;
-import com.siuming.hkg.view.page.ListViewPage;
 
 //contain the Reply list
 public class ReplyPageList {
-ArrayList<ReplyPage> replyPageList = new ArrayList<ReplyPage>();
+	ReplyPage[] replyPageList = new ReplyPage[50];
+	//ArrayList<ReplyPage> replyPageList = new ArrayList<ReplyPage>();
 		
 	int bufferSize = 0;
 	int showedPage = 0;
+	int lastPage = 0;
+	int firstPage = 1;
 	
 	//add reply Page with json string
-	public void addReplyPage(String str){
+	public void addReplyPage(String str,int page){
 		ReplyPage temp = new ReplyPage(str);
-		replyPageList.add(temp);
+		replyPageList[page] = temp;
+		if(page>lastPage){
+			lastPage = page;
+		}
 	}
 	
 	public boolean updateData() {
-		if(replyPageList.size()>showedPage){
-			ReplyPage page = replyPageList.get(showedPage++);
+		return updateData(showedPage + 1);
+	}
+	
+	public boolean updateData(int p) {
+		if(replyPageList[p].existData()){
+			ReplyPage page = replyPageList[p];
 			page.updateHashMapList();
+			showedPage = p;
 			return true;
 		}else{
 			return false;
 		}
 	}
 	
-	public void clear() {
-		showedPage = 0;
-		replyPageList.clear();
-	}
-	
 	public void setBufferSize(int size){
 		bufferSize = size;
-	}
-
-	public int loadedPage() {
-		return replyPageList.size();
 	}
 
 	public int showedPage() {
@@ -51,10 +45,25 @@ ArrayList<ReplyPage> replyPageList = new ArrayList<ReplyPage>();
 	}
 
 	public boolean canLoad() {
-		return replyPageList.size() - showedPage < bufferSize;
+		return lastPage - showedPage < bufferSize;
 	}
 
 	public SimpleAdapter getAdapter(int page) {
-		return replyPageList.get(page).getAdapter();
+		return replyPageList[page].getAdapter();
+	}
+
+	public boolean loadedFirstPage() {
+		if(replyPageList[firstPage]!= null)
+			return replyPageList[firstPage].existData();
+		else
+			return false;
+	}
+
+	public int getFirstPage() {
+		return firstPage;
+	}
+
+	public int nextToLoad() {
+		return lastPage+1;
 	}
 }
