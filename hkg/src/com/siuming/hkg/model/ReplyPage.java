@@ -11,6 +11,7 @@ import android.widget.SimpleAdapter;
 
 import com.siuming.hkg.GoldenConfig;
 import com.siuming.hkg.R;
+import com.siuming.hkg.ReplyAdapter;
 import com.siuming.hkg.util.MapKey;
 
 //contain one reply page data
@@ -23,7 +24,7 @@ public class ReplyPage {
 			MapKey.AUTHOR_GENDER };
 	int[] idList = new int[] { R.id.textViewAuthorName, R.id.textViewMessageBody, R.id.textViewDate };
 	ArrayList<HashMap<String, Object>> hashMaplist = new ArrayList<HashMap<String, Object>>();
-	SimpleAdapter adapter = new SimpleAdapter(GoldenConfig.getContext(), hashMaplist, layoutId,
+	SimpleAdapter adapter = new ReplyAdapter(GoldenConfig.getContext(), hashMaplist, layoutId,
 			keyList, idList);
 
 	public ReplyPage(String jsonStr) {
