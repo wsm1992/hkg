@@ -25,8 +25,10 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
-        public static final int refresh_list_pull_down=0x7f020001;
-        public static final int refresh_list_release_up=0x7f020002;
+        public static final int loading=0x7f020001;
+        public static final int loading_fail=0x7f020002;
+        public static final int refresh_list_pull_down=0x7f020003;
+        public static final int refresh_list_release_up=0x7f020004;
     }
     public static final class id {
         public static final int ListView1=0x7f08000a;

@@ -47,9 +47,9 @@ public class ReplyAdapter extends SimpleAdapter {
 	private void changeMessageBody(View view, HashMap<String, Object> map) {
 		TextView textViewMessageBody = (TextView) view.findViewById(R.id.textViewMessageBody);
 		textViewMessageBody.setMovementMethod(LinkMovementMethod.getInstance());
-//		URLImageGetter urlImgGetter = new URLImageGetter(GoldenConfig.getContext(),
-//				textViewMessageBody);
-		textViewMessageBody.setText(Html.fromHtml((String) map.get("messageBody"), null,
+		URLImageGetter urlImgGetter = new URLImageGetter(GoldenConfig.getContext(),
+				textViewMessageBody);
+		textViewMessageBody.setText(Html.fromHtml((String) map.get("messageBody"), urlImgGetter,
 				null));
 	}
 
