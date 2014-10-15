@@ -22,7 +22,10 @@ public class ReplyPageList {
 	}
 	
 	public boolean updateData() {
-		return updateData(showedPage + 1);
+		if(isFull(showedPage))
+			return updateData(showedPage + 1);
+		else
+			return updateData(showedPage);
 	}
 	
 	public boolean updateData(int p) {
@@ -64,6 +67,24 @@ public class ReplyPageList {
 	}
 
 	public int nextToLoad() {
-		return lastPage+1;
+		if(isFull(lastPage)){
+			return lastPage+1;
+		}else 
+			return lastPage;
+	}
+
+	public boolean isFull(int p) {
+		if (p == 1) {
+			if (replyPageList[p].getTopicList().size() >= 26) {
+				return true;
+			}
+		} else if (p <= 0) {
+			return true;
+		} else {
+			if (replyPageList[p].getTopicList().size() >= 25) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

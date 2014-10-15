@@ -34,8 +34,8 @@ public class ReplyPresenter {
 		viewPager = new HkgViewPager(activity);
 		
 		if(replyPageList.loadedFirstPage()){
-			ListViewPage pageView = new ListViewPage(activity);
 			int firstPage = replyPageList.getFirstPage();
+			ListViewPage pageView = new ListViewPage(activity);
 			viewPager.addPage(pageView, "第"+firstPage+"頁");
 			pageView.setListViewAdapter(replyPageList.getAdapter(firstPage));
 		}else{
@@ -89,9 +89,10 @@ public class ReplyPresenter {
 
 			if(viewPager!=null){
 				ListViewPage pageView = new ListViewPage(activity);
-				//pageList.add(page);
-				viewPager.addPage(pageView, "第"+page+"頁");
-				pageView.setListViewAdapter(replyPageList.getAdapter(page));
+				if(replyPageList.isFull(replyPageList.showedPage())){
+					viewPager.addPage(pageView, "第"+page+"頁");
+					pageView.setListViewAdapter(replyPageList.getAdapter(page));
+				}
 			}
 			
 			if(true){//waiting is true
