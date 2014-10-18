@@ -1,7 +1,10 @@
-package com.siuming.hkg;
+package com.siuming.hkg.URLImage;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import com.siuming.hkg.R;
+import com.siuming.hkg.R.drawable;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,26 +17,24 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 
-public class URLDrawable extends BitmapDrawable {
+public class UrlDrawable extends BitmapDrawable {
 	private Drawable drawable;
 	private Context context;
 	@SuppressWarnings("deprecation")
-	public URLDrawable(Context context) {
+	public UrlDrawable(Context context) {
 		this.context = context;
 		drawable = context.getResources().getDrawable(R.drawable.loading);
-		this.setBounds(getDefaultImageBounds(context));
-		drawable.setBounds(getDefaultImageBounds(context));
+		setBounds(getDefaultImageBounds(context));
 	}
 	
 	public void setImage(Bitmap bitmap){
 		drawable = new BitmapDrawable(bitmap);
-		drawable.setBounds(0,0,bitmap.getWidth(),bitmap.getHeight());
+		setBounds(0,0,bitmap.getWidth(),bitmap.getHeight());
 	}
 
 	public void setFailImage(Context context) {
 		drawable = context.getResources().getDrawable(R.drawable.loading_fail);
-		this.setBounds(getDefaultImageBounds(context));
-		drawable.setBounds(getDefaultImageBounds(context));
+		setBounds(getDefaultImageBounds(context));
 	}
 
 	public void getFaces(String paramString) {
@@ -51,8 +52,7 @@ public class URLDrawable extends BitmapDrawable {
 	}
 
 	private void reviseFacesBounds(Bitmap bitmap) {
-		drawable.setBounds(0,0,bitmap.getWidth()*3,bitmap.getHeight()*3);
-		this.setBounds(drawable.getBounds());
+		setBounds(0,0,bitmap.getWidth()*3,bitmap.getHeight()*3);
 	}
 
 	@Override
@@ -61,16 +61,28 @@ public class URLDrawable extends BitmapDrawable {
 			drawable.draw(canvas);
 		}
 	}
+	
+	@Override
+	public void setBounds(Rect bounds){
+		super.setBounds(bounds);
+		drawable.setBounds(bounds);
+	}
+	
+	@Override
+	public void setBounds(int left,int top,int right,int bottom){
+		super.setBounds(left,top,right,bottom);
+		drawable.setBounds(left,top,right,bottom);
+	}
 
 	public static  Rect getDefaultImageBounds(Context context) {
 		Rect bounds = new Rect(0, 0, 94, 94);
-		return bounds;
+		return getMaxBounds(context);
 	}
 	
 	public static  Rect getMaxBounds(Context context) {
 		DisplayMetrics dm = new DisplayMetrics();
 		((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);
-		int width = dm.widthPixels;
+		int width = dm.widthPixels*8/10;
 		int height = width;
 
 		Rect bounds = new Rect(0, 0, width, height);
@@ -81,12 +93,9 @@ public class URLDrawable extends BitmapDrawable {
 	public void reviseBounds(Context context) {
 		int maxWidth = getMaxBounds(context).width();
 		double factor = (double) drawable.getIntrinsicWidth() / (double) maxWidth;
-		factor = factor < 1 ? 1 : factor;
-		int newWidth = (int) (drawable.getIntrinsicWidth() / factor);
 		int newHeight = (int) (drawable.getIntrinsicHeight() / factor);
 
-		drawable.setBounds(0, 0, newWidth, newHeight);
-		this.setBounds(drawable.getBounds());
+		setBounds(0, 0, maxWidth, newHeight);
 	}
 	
 	
