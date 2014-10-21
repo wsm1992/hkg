@@ -23,7 +23,7 @@ public class ReplyPresenter {
 	
 	
 	public ReplyPresenter(String id) {
-		messageId = id;
+		messageId = "5448708";//id;
 		replyPageList = new ReplyPageList();
 		replyPageList.setBufferSize(3);
 		pageList = new ArrayList<ListViewPage>();

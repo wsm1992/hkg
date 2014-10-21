@@ -28,8 +28,9 @@ public class UrlDrawable extends BitmapDrawable {
 	}
 	
 	public void setImage(Bitmap bitmap){
-		drawable = new BitmapDrawable(bitmap);
+		drawable = new BitmapDrawable(context.getResources(),bitmap);
 		setBounds(0,0,bitmap.getWidth(),bitmap.getHeight());
+		reviseBounds(context);
 	}
 
 	public void setFailImage(Context context) {
@@ -92,10 +93,11 @@ public class UrlDrawable extends BitmapDrawable {
 
 	public void reviseBounds(Context context) {
 		int maxWidth = getMaxBounds(context).width();
-		double factor = (double) drawable.getIntrinsicWidth() / (double) maxWidth;
-		int newHeight = (int) (drawable.getIntrinsicHeight() / factor);
-
-		setBounds(0, 0, maxWidth, newHeight);
+		if(drawable.getIntrinsicWidth()>maxWidth){
+			double factor = (double) drawable.getIntrinsicWidth() / (double) maxWidth;
+			int newHeight = (int) (drawable.getIntrinsicHeight() / factor);	
+			setBounds(0, 0, maxWidth, newHeight);
+		}
 	}
 	
 	

@@ -4,11 +4,18 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.lang.Class;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.http.AndroidHttpClient;
 import android.os.Handler;
 import android.os.Message;
+
+import com.siuming.hkg.HttpClientHelper;
 
 public class GetImageTask implements Runnable{
 	Handler handler;
@@ -25,16 +32,19 @@ public class GetImageTask implements Runnable{
 	public void run() {
 		try {  
             String filePath = website; 
-            //mFileName = "test.jpg";  
             Message msg = Message.obtain();
-            byte[] data = getImage(filePath);  
+            byte[] data = null;
+            try{
+            	data = getImage(filePath);  
+            }catch(Exception e){
+            	e.printStackTrace();
+            }
             if(data!=null){  
             	bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
             	msg.obj = bitmap;
             }else{  
             	msg.obj = null;
-            }            
-    		
+            }    		
             handler.sendMessage(msg); 
         } catch (Exception e) {  
             e.printStackTrace();  
@@ -42,12 +52,13 @@ public class GetImageTask implements Runnable{
 	}
 	
 	public byte[] getImage(String path) throws Exception{  
-        URL url = new URL(path);  
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();  
-        conn.setConnectTimeout(5 * 1000);  
-        conn.setRequestMethod("GET");  
-        InputStream inStream = conn.getInputStream();  
-        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){  
+        
+
+		HttpClient client = HttpClientHelper.getHttpClient();
+		HttpGet httpGet = new HttpGet(path);
+		HttpResponse response = client.execute(httpGet);
+		InputStream inStream = response.getEntity().getContent();  
+        if(response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK){  
             return readStream(inStream);  
         }  
         return null;  
