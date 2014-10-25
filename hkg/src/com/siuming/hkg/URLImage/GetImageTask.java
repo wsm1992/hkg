@@ -15,7 +15,6 @@ import android.net.http.AndroidHttpClient;
 import android.os.Handler;
 import android.os.Message;
 
-import com.siuming.hkg.HttpClientHelper;
 
 public class GetImageTask implements Runnable{
 	Handler handler;
@@ -51,16 +50,19 @@ public class GetImageTask implements Runnable{
         }  
 	}
 	
-	public byte[] getImage(String path) throws Exception{  
-        
-
-		HttpClient client = HttpClientHelper.getHttpClient();
-		HttpGet httpGet = new HttpGet(path);
-		HttpResponse response = client.execute(httpGet);
-		InputStream inStream = response.getEntity().getContent();  
-        if(response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK){  
-            return readStream(inStream);  
-        }  
+	static boolean flag=true;
+	
+	public byte[] getImage(String path) throws Exception{
+		if(flag){
+			flag = false;
+			HttpClient client = HttpClientHelper.getHttpClient();
+			HttpGet httpGet = new HttpGet(path);
+			HttpResponse response = client.execute(httpGet);
+			InputStream inStream = response.getEntity().getContent();  
+	        if(response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK){  
+	            return readStream(inStream);  
+	        }  
+		}
         return null;  
     }  
 	

@@ -1,21 +1,23 @@
 package com.siuming.hkg.URLImage;
-import com.siuming.hkg.ImageCache;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.text.Html;
 import android.text.Html.ImageGetter;
 import android.widget.TextView;
+
+import com.siuming.hkg.ImageCache;
 
 public class UrlImageGetter implements ImageGetter {
 	TextView textView;
 	Context context;
 	UrlDrawable urlDrawable;
-//	ImageCache imageCache = GoldenConfig.getImageCache();
+	String textBody;
 
-	public UrlImageGetter(Context contxt, TextView textView) {
+	public UrlImageGetter(Context contxt, TextView textView, String textBody) {
 		this.context = contxt;
 		this.textView = textView;
+		this.textBody= textBody;
 	}
 
 	@Override
@@ -34,8 +36,14 @@ public class UrlImageGetter implements ImageGetter {
 				imgService.request(url);
 			}
 		}
-		 
 		return urlDrawable;
+	}
+	
+	public void loadPicSuccess(Bitmap bitmap,String url){
+		urlDrawable.setImage(bitmap);
+		ImageCache imageCache = ImageCache.getInstance();
+		imageCache.addImage(url, bitmap);
+		textView.setText(Html.fromHtml(textBody, this,null));
 	}
 	
 	class GetImageListenerImpl implements GetImageListener{
@@ -47,9 +55,7 @@ public class UrlImageGetter implements ImageGetter {
 		}
 		@Override
 		public void onSuccess(Bitmap bitmap) {
-			urlDrawable.setImage(bitmap);
-			ImageCache imageCache = ImageCache.getInstance();
-			imageCache.addImage(url, bitmap);
+			loadPicSuccess(bitmap,url);
 		}
 
 		@Override

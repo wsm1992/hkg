@@ -46,12 +46,13 @@ public class ReplyAdapter extends SimpleAdapter {
 	}
 
 	private void changeMessageBody(View view, HashMap<String, Object> map) {
+//		String messageBody = "<a href=\"http://i.na.cx/eSLhV.png\" target=\"_blank\" ><img style=\"border-width: 0px;\" src=\"http://i.na.cx/eSLhV.png\" alt=\"[img]http://i.na.cx/eSLhV.png[/img]\" onLoad=\"DrawImage(this)\" /></a> ";
+		String messageBody = (String) map.get("messageBody");
 		TextView textViewMessageBody = (TextView) view.findViewById(R.id.textViewMessageBody);
 		textViewMessageBody.setMovementMethod(LinkMovementMethod.getInstance());
 		UrlImageGetter urlImgGetter = new UrlImageGetter(GoldenConfig.getContext(),
-				textViewMessageBody);
-		textViewMessageBody.setText(Html.fromHtml((String) map.get("messageBody"), urlImgGetter,
-				null));
+				textViewMessageBody,messageBody); 
+		textViewMessageBody.setText(Html.fromHtml(messageBody, urlImgGetter,null));
 	}
 
 }

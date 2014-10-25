@@ -1,4 +1,4 @@
-package com.siuming.hkg;
+package com.siuming.hkg.URLImage;
 
 import java.io.IOException;
 import java.net.Socket;
