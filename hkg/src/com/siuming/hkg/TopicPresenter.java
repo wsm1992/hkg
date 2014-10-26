@@ -1,5 +1,10 @@
 package com.siuming.hkg;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import android.os.Handler;
+
 import com.siuming.hkg.goldenApi.ApiListener;
 import com.siuming.hkg.goldenApi.ApiModel;
 import com.siuming.hkg.goldenApi.ApiService;
@@ -14,6 +19,8 @@ public class TopicPresenter {
 	boolean isUpdating = false;
 	boolean isWaiting = true;
 	ApiListener apiListener = new ApiListenerImpl();
+	ExecutorService executorService = Executors.newSingleThreadExecutor();
+	Handler mHandler = new Handler();
 	
 	public TopicPresenter(RefListViewPage p){
 		page = p;
@@ -40,7 +47,7 @@ public class TopicPresenter {
 	}
 
 	private void loadTopic(int page) {
-		ApiService apiService = new ApiService(apiListener);
+		ApiService apiService = new ApiService(apiListener,executorService);
 		apiService.setThreadName("get Topic List");			
 		ApiModel apiModel = createGetTopicModel(page);
 		apiService.request(apiModel);		
@@ -65,20 +72,32 @@ public class TopicPresenter {
 
 		@Override
 		public void onSuccess(String str) {
-			topicPageList.addTopicPage(str);
-			isUpdating = false;
-
-			page.unShowLoading();
-			page.showMessage("load complete "+topicPageList.loadedPage());
-			if(topicPageList.canLoad()){
-				requestUpdate(topicPageList.loadedPage() + 1);
+			mHandler.post(new InitListTask(str));
+		}
+		
+		class InitListTask implements Runnable{
+			String str;
+			InitListTask(String str){
+				this.str = str;
 			}
 			
-			if(isWaiting){
-				topicPageList.updateData();
-				isWaiting = false;
-				if(topicPageList.showedPage()==1){
-					page.setSelection(1);
+			@Override
+			public void run() {
+				topicPageList.addTopicPage(str);
+				isUpdating = false;
+
+				page.unShowLoading();
+				page.showMessage("load complete "+topicPageList.loadedPage());
+				if(topicPageList.canLoad()){
+					requestUpdate(topicPageList.loadedPage() + 1);
+				}
+				
+				if(isWaiting){
+					topicPageList.updateData();
+					isWaiting = false;
+					if(topicPageList.showedPage()==1){
+						page.setSelection(1);
+					}
 				}
 			}
 		}

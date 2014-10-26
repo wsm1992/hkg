@@ -20,6 +20,7 @@ import android.util.DisplayMetrics;
 public class UrlDrawable extends BitmapDrawable {
 	private Drawable drawable;
 	private Context context;
+	Canvas canvas;
 	@SuppressWarnings("deprecation")
 	public UrlDrawable(Context context) {
 		this.context = context;
@@ -31,6 +32,9 @@ public class UrlDrawable extends BitmapDrawable {
 		drawable = new BitmapDrawable(context.getResources(),bitmap);
 		setBounds(0,0,bitmap.getWidth(),bitmap.getHeight());
 		reviseBounds(context);
+		if(canvas!=null){
+			drawable.draw(canvas);
+		}
 	}
 
 	public void setFailImage(Context context) {
@@ -58,6 +62,7 @@ public class UrlDrawable extends BitmapDrawable {
 
 	@Override
 	public void draw(Canvas canvas) {
+		this.canvas = canvas;
 		if (drawable != null) {
 			drawable.draw(canvas);
 		}

@@ -1,4 +1,7 @@
 package com.siuming.hkg.URLImage;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -13,6 +16,7 @@ public class UrlImageGetter implements ImageGetter {
 	Context context;
 	UrlDrawable urlDrawable;
 	String textBody;
+	static ExecutorService executorService = Executors.newFixedThreadPool(5);
 
 	public UrlImageGetter(Context contxt, TextView textView, String textBody) {
 		this.context = contxt;
@@ -43,7 +47,7 @@ public class UrlImageGetter implements ImageGetter {
 		urlDrawable.setImage(bitmap);
 		ImageCache imageCache = ImageCache.getInstance();
 		imageCache.addImage(url, bitmap);
-		textView.setText(Html.fromHtml(textBody, this,null));
+//		textView.setText(Html.fromHtml(textBody, this,null));
 	}
 	
 	class GetImageListenerImpl implements GetImageListener{

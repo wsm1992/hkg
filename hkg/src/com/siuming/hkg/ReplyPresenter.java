@@ -1,6 +1,10 @@
 package com.siuming.hkg;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import android.os.Handler;
 
 import com.siuming.hkg.goldenApi.ApiListener;
 import com.siuming.hkg.goldenApi.ApiModel;
@@ -9,7 +13,6 @@ import com.siuming.hkg.model.ReplyPageList;
 import com.siuming.hkg.view.activity.ReplyActivity;
 import com.siuming.hkg.view.component.HkgViewPager;
 import com.siuming.hkg.view.page.ListViewPage;
-import com.siuming.hkg.view.page.RefListViewPage;
 
 public class ReplyPresenter {
 	ReplyActivity activity;
@@ -17,13 +20,15 @@ public class ReplyPresenter {
 	String messageId;
 	ArrayList<ListViewPage> pageList;
 	ReplyPageList replyPageList;
+	ExecutorService executorService = Executors.newSingleThreadExecutor();
+	Handler mHandler = new Handler();
 	
 	boolean isUpdating = false;
 	boolean isWaiting = true;
 	
 	
 	public ReplyPresenter(String id) {
-		messageId = "5448708";//id;
+		messageId = id;
 		replyPageList = new ReplyPageList();
 		replyPageList.setBufferSize(3);
 		pageList = new ArrayList<ListViewPage>();
@@ -48,7 +53,7 @@ public class ReplyPresenter {
 	}	
 
 	private void loadPost(int page) {
-		ApiService apiService = new ApiService(new ApiListenerImpl(page));
+		ApiService apiService = new ApiService(new ApiListenerImpl(page),executorService);
 		apiService.setThreadName("get Topic List");			
 		ApiModel apiModel = createGetReplyModel(page);
 		apiService.request(apiModel);		
@@ -79,32 +84,45 @@ public class ReplyPresenter {
 		
 		@Override
 		public void onSuccess(String str) {
-			replyPageList.addReplyPage(str,page);
-			isUpdating = false;
-			
-			if (replyPageList.canLoad()) {
-				requestUpdate(replyPageList.nextToLoad());
+			mHandler.post(new InitListTask(str));			
+		}
+		
+		class InitListTask implements Runnable{
+			String str;
+			InitListTask(String str){
+				this.str = str;
 			}
 			
-
-			if(viewPager!=null){
-				ListViewPage pageView = new ListViewPage(activity);
-				if(replyPageList.isFull(replyPageList.showedPage())){
-					viewPager.addPage(pageView, "第"+page+"頁");
-					pageView.setListViewAdapter(replyPageList.getAdapter(page));
+			@Override
+			public void run() {
+				replyPageList.addReplyPage(str,page);
+				isUpdating = false;
+				
+				if (replyPageList.canLoad()) {
+					requestUpdate(replyPageList.nextToLoad());
 				}
+				
+
+				if(viewPager!=null){
+					ListViewPage pageView = new ListViewPage(activity);
+					if(replyPageList.isFull(replyPageList.showedPage())){
+						viewPager.addPage(pageView, "第"+page+"頁");
+						pageView.setListViewAdapter(replyPageList.getAdapter(page));
+					}
+				}
+				
+				if(true){//waiting is true
+					replyPageList.updateData();
+					isWaiting = false;
+				}			
 			}
 			
-			if(true){//waiting is true
-				replyPageList.updateData();
-				isWaiting = false;
-			}			
 		}
 
 		@Override
 		public void ontFail(String str) {
 			isUpdating = false;
 			//requestUpdate(replyPageList.loadedPage());
-		}		
+		}
 	}
 }
